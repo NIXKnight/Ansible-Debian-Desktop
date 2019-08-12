@@ -1,0 +1,34 @@
+---
+# tasks file for Browsers
+- name: Create Browser Directories
+  file:
+    path: "{{ INSTALL_PREFIX }}/{{ item.name }}-{{ item.version }}"
+    state: "directory"
+  with_items: "{{ BROWSERS }}"
+
+- name: Download Browser Tarballs
+  get_url:
+    url: "{{ item.url }}"
+    dest: "{{ item.local_path }}"
+  with_items: "{{ BROWSERS }}"
+
+- name: Extract Browser Tarballs
+  unarchive:
+    src: "{{ item.local_path }}"
+    dest: "{{ INSTALL_PREFIX }}/{{ item.name }}-{{ item.version }}"
+    extra_opts:
+      - "--strip-components=1"
+  with_items: "{{ BROWSERS }}"
+
+- name: Create Symbolic Links
+  file:
+    src: "{{ INSTALL_PREFIX }}/{{ item.name }}-{{ item.version }}"
+    dest: "{{ INSTALL_PREFIX }}/{{ item.name }}"
+    state: "link"
+  with_items: "{{ BROWSERS }}"
+
+- name: Remove Browser Archives
+  file:
+    path: "{{ item.local_path }}"
+    state: "absent"
+  with_items: "{{ BROWSERS }}"
