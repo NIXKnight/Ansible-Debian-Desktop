@@ -44,6 +44,20 @@
     - "{{ SMPLAYER_THEMES_DEB }}"
     - "{{ SMPLAYER_SKINS_DEB }}"
 
+- name: Create SMPlayer User Configuration Directory
+  file:
+    path: "{{ SMPLAYER_USER_CONF_DIR }}"
+    state: "directory"
+
+- name: Configure SMPlayer for User(s)
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ SMPLAYER_USER }}"
+    group: "{{ SMPLAYER_USER }}"
+    mode: 0644
+  with_items: "{{ SMPLAYER_USER_CONF_FILES }}"
+
 - name: Remove SMPlayer Directories
   file:
     path: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ item.name }}-{{ item.version }}"

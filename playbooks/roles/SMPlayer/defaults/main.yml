@@ -1,5 +1,6 @@
 ---
 # defaults file for SMPlayer
+SMPLAYER_USER: ""
 SMPLAYER_PREREQUISITES:
   - "mpv"
   - "qtbase5-dev"
@@ -24,11 +25,19 @@ SMPLAYER_THEMES_TARBALL: "smplayer-themes-{{ SMPLAYER_THEMES_VERSION }}.tar.bz2"
 SMPLAYER_SKINS_VERSION: "15.2.0"
 SMPLAYER_SKINS_DEB: "smplayer-skins_{{ SMPLAYER_SKINS_VERSION }}_all.deb"
 SMPLAYER_SKINS_TARBALL: "smplayer-skins-{{ SMPLAYER_SKINS_VERSION }}.tar.bz2"
-# SMPLAYER_DEB_PACKAGES:
-#     - '{{ SMPLAYER_DEB }}'
-#     - '{{ SMPLAYER_THEMES_DEB }}'
-#     - '{{ SMPLAYER_SKINS_DEB }}'
 SMPLAYER:
   - { name: "smplayer", version: "{{ SMPLAYER_VERSION }}", url: "http://downloads.sourceforge.net/smplayer/smplayer-{{ SMPLAYER_VERSION }}.tar.bz2", local_path: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ SMPLAYER_TARBALL }}" }
   - { name: "smplayer-themes", version: "{{ SMPLAYER_THEMES_VERSION }}", url: "http://downloads.sourceforge.net/smplayer/smplayer-themes-{{ SMPLAYER_THEMES_VERSION }}.tar.bz2", local_path: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ SMPLAYER_THEMES_TARBALL }}" }
   - { name: "smplayer-skins", version: "{{ SMPLAYER_SKINS_VERSION }}", url: "http://downloads.sourceforge.net/smplayer/smplayer-skins-{{ SMPLAYER_SKINS_VERSION }}.tar.bz2", local_path: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ SMPLAYER_SKINS_TARBALL }}" }
+
+# SMPlayer configuration
+SMPLAYER_USER_CONF_DIR: "/home/{{ SMPLAYER_USER }}/.config/smplayer"
+SMPLAYER_USER_CONF_FILES:
+  - { src: "templates/home/user/.config/smplayer/smplayer.ini.j2", dest: "{{ SMPLAYER_USER_CONF_DIR }}/smplayer.ini" }
+SMPLAYER_CONF_MPLAYER_BIN: "/usr/bin/mpv"
+SMPLAYER_CONF_SCREENSHOT_FOLDER: ""
+SMPLAYER_CONF_SCREENSHOT_FORMAT: "jpg"
+SMPLAYER_CONF_SCREENSHOT_TEMPLATE: "cap_%F_%p_%02n"
+SMPLAYER_CONF_GUI: "SkinGUI"
+SMPLAYER_CONF_ICONSET: "Gonzo"
+SMPLAYER_CONF_QT_STYLE: "Fusion"
