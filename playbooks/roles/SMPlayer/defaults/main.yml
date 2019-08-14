@@ -1,34 +1,28 @@
 ---
 # defaults file for SMPlayer
+
+# User for which SMPlayer will be configured
 SMPLAYER_USER: ""
-SMPLAYER_PREREQUISITES:
-  - "mpv"
-  - "qtbase5-dev"
-  - "qt5-qmake"
-  - "qt5-default"
-  - "qtscript5-dev"
-  - "qttools5-dev-tools"
-  - "qtbase5-private-dev"
-  - "libqt5webkit5-dev"
-  - "zlib1g-dev"
-  - "fakeroot"
-  - "build-essential"
-  - "devscripts"
-  - "debhelper"
+
+# SMPlayer build prefix
 SMPLAYER_SOURCE_PREFIX: "/usr/src"
+
+#SMPlayer version, deb packages, tarballs and URLs
 SMPLAYER_VERSION: "19.5.0"
-SMPLAYER_TARBALL: "smplayer-{{ SMPLAYER_VERSION }}.tar.bz2"
+SMPLAYER_SOURCE: "{{ smplayer_name }}-{{ SMPLAYER_VERSION }}"
+SMPLAYER_TARBALL: "{{ SMPLAYER_SOURCE }}.tar.bz2"
 SMPLAYER_DEB: "smplayer_{{ SMPLAYER_VERSION }}_amd64.deb"
+SMPLAYER_TARBALL_URL: "http://downloads.sourceforge.net/smplayer/{{ SMPLAYER_TARBALL }}"
 SMPLAYER_THEMES_VERSION: "18.6.0"
+SMPLAYER_THEMES_SOURCE: "{{ smplayer_themes_name }}-{{ SMPLAYER_THEMES_VERSION }}"
 SMPLAYER_THEMES_DEB: "smplayer-themes_{{ SMPLAYER_THEMES_VERSION }}_all.deb"
-SMPLAYER_THEMES_TARBALL: "smplayer-themes-{{ SMPLAYER_THEMES_VERSION }}.tar.bz2"
+SMPLAYER_THEMES_TARBALL: "{{ SMPLAYER_THEMES_SOURCE }}.tar.bz2"
+SMPLAYER_THEMES_TARBALL_URL: "http://downloads.sourceforge.net/smplayer/{{ SMPLAYER_THEMES_TARBALL }}"
 SMPLAYER_SKINS_VERSION: "15.2.0"
+SMPLAYER_SKINS_SOURCE: "{{ smplayer_skins_name }}-{{ SMPLAYER_SKINS_VERSION }}"
 SMPLAYER_SKINS_DEB: "smplayer-skins_{{ SMPLAYER_SKINS_VERSION }}_all.deb"
-SMPLAYER_SKINS_TARBALL: "smplayer-skins-{{ SMPLAYER_SKINS_VERSION }}.tar.bz2"
-SMPLAYER:
-  - { name: "smplayer", version: "{{ SMPLAYER_VERSION }}", url: "http://downloads.sourceforge.net/smplayer/smplayer-{{ SMPLAYER_VERSION }}.tar.bz2", local_path: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ SMPLAYER_TARBALL }}" }
-  - { name: "smplayer-themes", version: "{{ SMPLAYER_THEMES_VERSION }}", url: "http://downloads.sourceforge.net/smplayer/smplayer-themes-{{ SMPLAYER_THEMES_VERSION }}.tar.bz2", local_path: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ SMPLAYER_THEMES_TARBALL }}" }
-  - { name: "smplayer-skins", version: "{{ SMPLAYER_SKINS_VERSION }}", url: "http://downloads.sourceforge.net/smplayer/smplayer-skins-{{ SMPLAYER_SKINS_VERSION }}.tar.bz2", local_path: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ SMPLAYER_SKINS_TARBALL }}" }
+SMPLAYER_SKINS_TARBALL: "{{ SMPLAYER_SKINS_SOURCE }}.tar.bz2"
+SMPLAYER_SKINS_TARBALL_URL: "http://downloads.sourceforge.net/smplayer/{{ SMPLAYER_SKINS_TARBALL }}"
 
 # SMPlayer configuration
 SMPLAYER_USER_CONF_DIR: "/home/{{ SMPLAYER_USER }}/.config/smplayer"

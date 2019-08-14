@@ -2,29 +2,37 @@
 # tasks file for SMPlayer
 - name: Install Prerequisites
   apt:
-    pkg: "{{ SMPLAYER_PREREQUISITES }}"
+    pkg: "{{ smplayer_prerequisites }}"
     state: "present"
     update_cache: "yes"
 
-- name: Create SMPlayer Directories
+- name: Create SMPlayer Directories in {{ SMPLAYER_SOURCE_PREFIX }}
   file:
-    path: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ item.name }}-{{ item.version }}"
+    path: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ item }}"
     state: "directory"
-  with_items: "{{ SMPLAYER }}"
+  with_items:
+    - "{{ SMPLAYER_SOURCE }}"
+    - "{{ SMPLAYER_THEMES_SOURCE }}"
+    - "{{ SMPLAYER_SKINS_SOURCE }}"
 
 - name: Download SMPlayer Tarballs
   get_url:
     url: "{{ item.url }}"
-    dest: "{{ item.local_path }}"
-  with_items: "{{ SMPLAYER }}"
+    dest: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ item.dest }}"
+  with_items:
+    - { url: "{{ SMPLAYER_TARBALL_URL }}", dest: "{{ SMPLAYER_TARBALL }}" }
+    - { url: "{{ SMPLAYER_THEMES_TARBALL_URL }}", dest: "{{ SMPLAYER_THEMES_TARBALL }}" }
+    - { url: "{{ SMPLAYER_SKINS_TARBALL_URL }}", dest: "{{ SMPLAYER_SKINS_TARBALL }}" }
 
 - name: Extract SMPlayer Tarballs
   unarchive:
-    src: "{{ item.local_path }}"
-    dest: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ item.name }}-{{ item.version }}"
-    extra_opts:
-      - "--strip-components=1"
-  with_items: "{{ SMPLAYER }}"
+    src: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ item.src }}"
+    dest: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ item.dest }}"
+    extra_opts: "--strip-components=1"
+  with_items:
+    - { src: "{{ SMPLAYER_TARBALL }}", dest: "{{ SMPLAYER_SOURCE }}" }
+    - { src: "{{ SMPLAYER_THEMES_TARBALL }}", dest: "{{ SMPLAYER_THEMES_SOURCE }}" }
+    - { src: "{{ SMPLAYER_SKINS_TARBALL }}", dest: "{{ SMPLAYER_SKINS_SOURCE }}" }
 
 - name: Create SMPlayer DEB Packages from Source
   shell: |
@@ -32,7 +40,10 @@
   args:
     executable: "/bin/bash"
     chdir: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ item.name }}-{{ item.version }}"
-  with_items: "{{ SMPLAYER }}"
+  with_items:
+    - "{{ SMPLAYER_SOURCE }}"
+    - "{{ SMPLAYER_THEMES_SOURCE }}"
+    - "{{ SMPLAYER_SKINS_SOURCE }}"
 
 - name: Install SMPlayer DEB Packages
   shell: "dpkg --install {{ item }}"
@@ -49,7 +60,7 @@
     path: "{{ SMPLAYER_USER_CONF_DIR }}"
     state: "directory"
 
-- name: Configure SMPlayer for User(s)
+- name: Configure SMPlayer for User
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -60,15 +71,21 @@
 
 - name: Remove SMPlayer Directories
   file:
-    path: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ item.name }}-{{ item.version }}"
+    path: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ item }}"
     state: "absent"
-  with_items: "{{ SMPLAYER }}"
+  with_items:
+    - "{{ SMPLAYER_SOURCE }}"
+    - "{{ SMPLAYER_THEMES_SOURCE }}"
+    - "{{ SMPLAYER_SKINS_SOURCE }}"
 
 - name: Remove SMPlayer Tarballs
   file:
-    path: "{{ item.local_path }}"
+    path: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ item }}"
     state: "absent"
-  with_items: "{{ SMPLAYER }}"
+  with_items:
+    - "{{ SMPLAYER_TARBALL }}"
+    - "{{ SMPLAYER_THEMES_TARBALL }}"
+    - "{{ SMPLAYER_SKINS_TARBALL }}"
 
 - name: Remove SMPlayer DEB Packages
   file:

@@ -1,0 +1,19 @@
+---
+# vars file for SMPlayer
+smplayer_prerequisites:
+  - "mpv"
+  - "qtbase5-dev"
+  - "qt5-qmake"
+  - "qt5-default"
+  - "qtscript5-dev"
+  - "qttools5-dev-tools"
+  - "qtbase5-private-dev"
+  - "libqt5webkit5-dev"
+  - "zlib1g-dev"
+  - "fakeroot"
+  - "build-essential"
+  - "devscripts"
+  - "debhelper"
+smplayer_name: "smplayer"
+smplayer_themes_name: "smplayer-themes"
+smplayer_skins_name: "smplayer-skins"
