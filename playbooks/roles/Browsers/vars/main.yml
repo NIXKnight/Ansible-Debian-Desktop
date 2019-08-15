@@ -1,0 +1,5 @@
+---
+# vars file for Browsers
+icecat_name: "icecat"
+waterfox_name: "waterfox"
+seamonkey_name: "seamonkey"

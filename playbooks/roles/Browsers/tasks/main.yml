@@ -2,33 +2,47 @@
 # tasks file for Browsers
 - name: Create Browser Directories
   file:
-    path: "{{ INSTALL_PREFIX }}/{{ item.name }}-{{ item.version }}"
+    path: "{{ INSTALL_PREFIX }}/{{ item }}"
     state: "directory"
-  with_items: "{{ BROWSERS }}"
+  with_items:
+    - "{{ icecat_name }}-{{ ICECAT_VERSION }}"
+    - "{{ waterfox_name }}-{{ WATERFOX_VERSION }}"
+    - "{{ seamonkey_name }}-{{ SEAMONKEY_VERSION }}"
 
 - name: Download Browser Tarballs
   get_url:
     url: "{{ item.url }}"
-    dest: "{{ item.local_path }}"
-  with_items: "{{ BROWSERS }}"
+    dest: "{{ INSTALL_PREFIX }}/{{ item.dest }}"
+  with_items:
+    - { url: "{{ ICECAT_TARBALL_URL }}", dest: "{{ ICECAT_TARBALL }}" }
+    - { url: "{{ WATERFOX_TARBALL_URL }}", dest: "{{ WATERFOX_TARBALL }}" }
+    - { url: "{{ SEAMONKEY_TARBALL_URL }}", dest: "{{ SEAMONKEY_TARBALL }}" }
 
 - name: Extract Browser Tarballs
   unarchive:
-    src: "{{ item.local_path }}"
-    dest: "{{ INSTALL_PREFIX }}/{{ item.name }}-{{ item.version }}"
-    extra_opts:
-      - "--strip-components=1"
-  with_items: "{{ BROWSERS }}"
+    src: "{{ INSTALL_PREFIX }}/{{ item.src }}"
+    dest: "{{ INSTALL_PREFIX }}/{{ item.dest }}"
+    extra_opts: "--strip-components=1"
+  with_items:
+    - { src: "{{ ICECAT_TARBALL }}", dest: "{{ icecat_name }}-{{ ICECAT_VERSION }}" }
+    - { src: "{{ WATERFOX_TARBALL }}", dest: "{{ waterfox_name }}-{{ WATERFOX_VERSION }}" }
+    - { src: "{{ SEAMONKEY_TARBALL }}", dest: "{{ seamonkey_name }}-{{ SEAMONKEY_VERSION }}" }
 
 - name: Create Symbolic Links
   file:
-    src: "{{ INSTALL_PREFIX }}/{{ item.name }}-{{ item.version }}"
-    dest: "{{ INSTALL_PREFIX }}/{{ item.name }}"
+    src: "{{ INSTALL_PREFIX }}/{{ item.src }}"
+    dest: "{{ INSTALL_PREFIX }}/{{ item.dest }}"
     state: "link"
-  with_items: "{{ BROWSERS }}"
+  with_items:
+    - { src: "{{ icecat_name }}-{{ ICECAT_VERSION }}", dest: "{{ icecat_name }}" }
+    - { src: "{{ waterfox_name }}-{{ WATERFOX_VERSION }}", dest: "{{ waterfox_name }}" }
+    - { src: "{{ seamonkey_name }}-{{ SEAMONKEY_VERSION }}", dest: "{{ seamonkey_name }}" }
 
-- name: Remove Browser Archives
+- name: Remove Browser Tarballs
   file:
-    path: "{{ item.local_path }}"
+    path: "{{ INSTALL_PREFIX }}/{{ item }}"
     state: "absent"
-  with_items: "{{ BROWSERS }}"
+  with_items:
+    - "{{ ICECAT_TARBALL }}"
+    - "{{ WATERFOX_TARBALL }}"
+    - "{{ SEAMONKEY_TARBALL }}"

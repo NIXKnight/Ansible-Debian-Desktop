@@ -2,12 +2,11 @@
 # defaults file for Browsers
 INSTALL_PREFIX: "/opt"
 ICECAT_VERSION: "60.7.0"
-ICECAT_FILE: "icecat-{{ ICECAT_VERSION }}.en-US.gnulinux-x86_64.tar.bz2"
+ICECAT_TARBALL: "{{ icecat_name }}-{{ ICECAT_VERSION }}.en-US.gnulinux-x86_64.tar.bz2"
+ICECAT_TARBALL_URL: "http://mirror.team-cymru.com/gnu/gnuzilla/{{ ICECAT_VERSION }}/{{ ICECAT_TARBALL }}"
 WATERFOX_VERSION: "56.2.12"
-WATERFOX_FILE: "waterfox-{{ WATERFOX_VERSION }}.en-US.linux-x86_64.tar.bz2"
+WATERFOX_TARBALL: "{{ waterfox_name }}-{{ WATERFOX_VERSION }}.en-US.linux-x86_64.tar.bz2"
+WATERFOX_TARBALL_URL: "https://storage-waterfox.netdna-ssl.com/releases/linux64/installer/{{ WATERFOX_TARBALL }}"
 SEAMONKEY_VERSION: "2.49.4"
-SEAMONKEY_FILE: "seamonkey-{{ SEAMONKEY_VERSION }}.en-US.linux-x86_64.tar.bz2"
-BROWSERS:
-  - { name: "icecat", version: "{{ ICECAT_VERSION }}", url: "http://mirror.team-cymru.com/gnu/gnuzilla/{{ ICECAT_VERSION }}/{{ ICECAT_FILE }}", local_path: "/tmp/{{ ICECAT_FILE }}" }
-  - { name: "waterfox", version: "{{ WATERFOX_VERSION }}", url: "https://storage-waterfox.netdna-ssl.com/releases/linux64/installer/{{ WATERFOX_FILE }}", local_path: "/tmp/{{ WATERFOX_FILE }}" }
-  - { name: "seamonkey", version: "{{ SEAMONKEY_VERSION }}", url: "https://archive.mozilla.org/pub/seamonkey/releases/{{ SEAMONKEY_VERSION }}/contrib/{{ SEAMONKEY_FILE }}", local_path: "/tmp/{{ SEAMONKEY_FILE }}" }
+SEAMONKEY_TARBALL: "{{ seamonkey_name }}-{{ SEAMONKEY_VERSION }}.en-US.linux-x86_64.tar.bz2"
+SEAMONKEY_TARBALL_URL: "https://archive.mozilla.org/pub/seamonkey/releases/{{ SEAMONKEY_VERSION }}/contrib/{{ SEAMONKEY_TARBALL }}"
