@@ -1,0 +1,37 @@
+---
+# defaults file for SMPlayer
+
+# User for which SMPlayer will be configured
+SMPLAYER_USER: ""
+
+# SMPlayer build prefix
+SMPLAYER_SOURCE_PREFIX: "/usr/src"
+
+#SMPlayer version, deb packages, tarballs and URLs
+SMPLAYER_VERSION: "19.5.0"
+SMPLAYER_SOURCE: "{{ smplayer_name }}-{{ SMPLAYER_VERSION }}"
+SMPLAYER_TARBALL: "{{ SMPLAYER_SOURCE }}.tar.bz2"
+SMPLAYER_DEB: "smplayer_{{ SMPLAYER_VERSION }}_amd64.deb"
+SMPLAYER_TARBALL_URL: "http://downloads.sourceforge.net/smplayer/{{ SMPLAYER_TARBALL }}"
+SMPLAYER_THEMES_VERSION: "18.6.0"
+SMPLAYER_THEMES_SOURCE: "{{ smplayer_themes_name }}-{{ SMPLAYER_THEMES_VERSION }}"
+SMPLAYER_THEMES_DEB: "smplayer-themes_{{ SMPLAYER_THEMES_VERSION }}_all.deb"
+SMPLAYER_THEMES_TARBALL: "{{ SMPLAYER_THEMES_SOURCE }}.tar.bz2"
+SMPLAYER_THEMES_TARBALL_URL: "http://downloads.sourceforge.net/smplayer/{{ SMPLAYER_THEMES_TARBALL }}"
+SMPLAYER_SKINS_VERSION: "15.2.0"
+SMPLAYER_SKINS_SOURCE: "{{ smplayer_skins_name }}-{{ SMPLAYER_SKINS_VERSION }}"
+SMPLAYER_SKINS_DEB: "smplayer-skins_{{ SMPLAYER_SKINS_VERSION }}_all.deb"
+SMPLAYER_SKINS_TARBALL: "{{ SMPLAYER_SKINS_SOURCE }}.tar.bz2"
+SMPLAYER_SKINS_TARBALL_URL: "http://downloads.sourceforge.net/smplayer/{{ SMPLAYER_SKINS_TARBALL }}"
+
+# SMPlayer configuration
+SMPLAYER_USER_CONF_DIR: "/home/{{ SMPLAYER_USER }}/.config/smplayer"
+SMPLAYER_USER_CONF_FILES:
+  - { src: "templates/home/user/.config/smplayer/smplayer.ini.j2", dest: "{{ SMPLAYER_USER_CONF_DIR }}/smplayer.ini" }
+SMPLAYER_CONF_MPLAYER_BIN: "/usr/bin/mpv"
+SMPLAYER_CONF_SCREENSHOT_FOLDER: ""
+SMPLAYER_CONF_SCREENSHOT_FORMAT: "jpg"
+SMPLAYER_CONF_SCREENSHOT_TEMPLATE: "cap_%F_%p_%02n"
+SMPLAYER_CONF_GUI: "SkinGUI"
+SMPLAYER_CONF_ICONSET: "Gonzo"
+SMPLAYER_CONF_QT_STYLE: "Fusion"
