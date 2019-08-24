@@ -39,7 +39,7 @@
     ./create_deb.sh
   args:
     executable: "/bin/bash"
-    chdir: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ item.name }}-{{ item.version }}"
+    chdir: "{{ SMPLAYER_SOURCE_PREFIX }}/{{ item }}"
   with_items:
     - "{{ SMPLAYER_SOURCE }}"
     - "{{ SMPLAYER_THEMES_SOURCE }}"
